@@ -6,6 +6,9 @@ public class Service {
     private String serviceName;
     private int price;
 
+    public Service() {
+    }
+
     public int getId() {
         return id;
     }

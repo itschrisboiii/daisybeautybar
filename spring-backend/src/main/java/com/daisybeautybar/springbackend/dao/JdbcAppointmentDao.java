@@ -80,7 +80,7 @@ public class JdbcAppointmentDao implements AppointmentDao{
     @Override
     public Appointment createAppointment(Appointment newAppointment) {
         Appointment appointment = null;
-        String sql = "INSERT INTO appointment (date, time, client_id, service_id) " +
+        String sql = "INSERT INTO appointment (appointment_date, appointment_time, client_id, service_id) " +
                 "VALUES (?, ?, ?, ?) RETURNING id;";
         try {
             int newAppointmentId = jdbcTemplate.queryForObject(sql, int.class, newAppointment.getDate(),
@@ -97,10 +97,10 @@ public class JdbcAppointmentDao implements AppointmentDao{
     @Override
     public Appointment updateAppointment(Appointment appointment) {
         Appointment updatedAppointment = null;
-        String sql = "UPDATE appointment SET date=?, time=?, client_id=?, service_id=? WHERE id = ?;";
+        String sql = "UPDATE appointment SET appointment_date=?, appointment_time=?, client_id=?, service_id=? WHERE id = ?;";
 
         try {
-            jdbcTemplate.update(sql, appointment.getDate(), appointment.getTime(), appointment.getClient_id(), appointment.getService_id());
+            jdbcTemplate.update(sql, appointment.getDate(), appointment.getTime(), appointment.getClient_id(), appointment.getService_id(), appointment.getId());
             updatedAppointment = getAppointmentById(appointment.getId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
@@ -129,8 +129,8 @@ public class JdbcAppointmentDao implements AppointmentDao{
     private Appointment mapRowToAppointment(SqlRowSet rowSet) {
         Appointment appointment = new Appointment();
         appointment.setId(rowSet.getInt("id")); //  change
-        appointment.setDate(rowSet.getDate("date").toLocalDate()); // change
-        appointment.setTime(Time.valueOf(rowSet.getTime("time").toLocalTime()));
+        appointment.setDate(rowSet.getDate("appointment_date").toLocalDate()); // change
+        appointment.setTime(Time.valueOf(rowSet.getTime("appointment_time").toLocalTime()));
         appointment.setClient_id(rowSet.getInt("client_id"));
         appointment.setService_id(rowSet.getInt("service_id"));
         return appointment;

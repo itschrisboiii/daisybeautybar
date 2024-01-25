@@ -41,7 +41,7 @@ public class JdbcServicesDao implements ServicesDao{
     @Override
     public List<Service> getServices() {
         List<Service> services = new ArrayList<>();
-        String sql = "SELECT * FROM services WHERE id = ?;";
+        String sql = "SELECT * FROM services;";
         try {
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
             while (results.next()) {
@@ -59,7 +59,8 @@ public class JdbcServicesDao implements ServicesDao{
     @Override
     public Service newService(Service service) {
         Service newService = null;
-        String sql = "INSERT INTO services(service_name, price) VALUES (?, ?);";
+        String sql = "INSERT INTO services(service_name, price) VALUES (?, ?) " +
+                "RETURNING id;";
         try {
             int newServiceId = jdbcTemplate.queryForObject(sql,int.class, service.getServiceName(), service.getPrice());
             newService = getServiceById(newServiceId);
@@ -76,7 +77,7 @@ public class JdbcServicesDao implements ServicesDao{
         Service service = null;
         String sql = "UPDATE services SET service_name=?, price=? WHERE id = ?;";
         try {
-            jdbcTemplate.update(sql, updatedService.getServiceName(), updatedService.getPrice());
+            jdbcTemplate.update(sql, updatedService.getServiceName(), updatedService.getPrice(), updatedService.getId());
             service = getServiceById(updatedService.getId());
         } catch (CannotGetJdbcConnectionException e) {
             throw new DaoException("Unable to connect to server or database", e);
