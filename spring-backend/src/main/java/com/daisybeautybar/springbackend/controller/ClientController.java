@@ -4,6 +4,7 @@ import com.daisybeautybar.springbackend.dao.ClientDao;
 import com.daisybeautybar.springbackend.model.Client;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/clients")
+@PreAuthorize("isAuthenticated()")
 public class ClientController {
     private final ClientDao clientDao;
 
@@ -20,12 +22,13 @@ public class ClientController {
         this.clientDao = clientDao;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Client> list() {
         return clientDao.getClients();
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Client getById(@PathVariable int id) {
         Client client = clientDao.getClientById(id);
@@ -35,6 +38,7 @@ public class ClientController {
             return client;
         }
     }
+    @PreAuthorize("permitAll")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Client addClient(@Valid @RequestBody Client client) {
