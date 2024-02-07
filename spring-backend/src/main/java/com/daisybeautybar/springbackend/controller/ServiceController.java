@@ -13,8 +13,9 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/services")
-@PreAuthorize("isAuthenticated")
+@PreAuthorize("isAuthenticated()")
 public class ServiceController {
 
     private final ServicesDao servicesDao;
@@ -22,12 +23,12 @@ public class ServiceController {
     public ServiceController(ServicesDao servicesDao) {
         this.servicesDao = servicesDao;
     }
-
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("permitAll")
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Service> list() {return servicesDao.getServices(); }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
+    @PreAuthorize("permitAll")
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Service getById(@PathVariable int id) {
         Service service = servicesDao.getServiceById(id);
@@ -38,14 +39,14 @@ public class ServiceController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(path = "", method = RequestMethod.POST)
     public Service addService(@Valid @RequestBody Service service) {
         return servicesDao.newService(service);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public Service updateService(@Valid @RequestBody Service service, @PathVariable int id) {
         service.setId(id);
@@ -56,7 +57,7 @@ public class ServiceController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Service not found");
         }
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void deleteService(@PathVariable int id) {

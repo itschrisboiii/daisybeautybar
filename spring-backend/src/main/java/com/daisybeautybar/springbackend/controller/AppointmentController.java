@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/appointments")
 @PreAuthorize("isAuthenticated()")
 public class AppointmentController {
@@ -21,11 +22,11 @@ public class AppointmentController {
     public AppointmentController(AppointmentDao appointmentDao) {
         this.appointmentDao = appointmentDao;
     }
-    @PreAuthorize("hasRole('ADMIN')")
+
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Appointment> list() {return appointmentDao.getAppointments(); }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Appointment getById(@PathVariable int id) {
         Appointment appointment = appointmentDao.getAppointmentById(id);
@@ -42,7 +43,7 @@ public class AppointmentController {
         return appointmentDao.createAppointment(appointment);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
     public Appointment updateAppointment(@Valid @RequestBody Appointment appointment, @PathVariable int id) {
         appointment.setId(id);
@@ -54,7 +55,6 @@ public class AppointmentController {
         }
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public void deleteAppointment(@PathVariable int id) {

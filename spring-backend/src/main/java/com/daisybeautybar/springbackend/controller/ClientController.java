@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/clients")
 @PreAuthorize("isAuthenticated()")
 public class ClientController {
@@ -22,13 +23,11 @@ public class ClientController {
         this.clientDao = clientDao;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "", method = RequestMethod.GET)
     public List<Client> list() {
         return clientDao.getClients();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public Client getById(@PathVariable int id) {
         Client client = clientDao.getClientById(id);
