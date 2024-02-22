@@ -2,26 +2,14 @@ body {
     font-family: "Barlow Semi Condensed";
     background-color: hotpink;
     color: white;
+    margin: 0;
 }
 
 li {
     list-style: none;
+
 }
 
-nav ul li a {
-    text-decoration: none;
-     color: white;
-     font-weight: bold;
-}
-
-nav ul li {
-    display: inline-block;
-    padding-right: 25px;
-    font-size: 18px;
-}
-nav {
-    text-align: center;
-}
 .button a {
     background-color: white;
     color: hotpink;
@@ -37,7 +25,7 @@ main {
     text-align: center;
     font-size: 30px;
     height: 100%;
-    margin-top: 10%;
+    margin-top: 20%;
     width: 100%;
     background-size: cover;
 }
@@ -46,19 +34,34 @@ main h2 {
     font-size: 30px;
 }
 
-footer {
-    background-color: hotpink;
-    position: absolute;
-    display:flex;
-    justify-content: space-around;
-    width: 100%;
-    padding: 50px 0;
-    font-family: "Roboto Condensed";
-    bottom: 0;;
-}
-
 
 header {
     text-align: center;
     font-size: 50px;
+}
+
+
+footer {
+    color: white;
+    display:flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 50px 0;
+    position: absolute;
+    bottom: 0;
+    font-size: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    footer {
+        font-size: 7px;
+    }
+
+    main h2 {
+        font-size: 25px;
+    }
+
+    main {
+        margin-top: 40%;
+    }
 }
