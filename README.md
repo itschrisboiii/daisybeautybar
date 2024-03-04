@@ -1,1 +1,2 @@
 # daisybeautybar
+Lash Appointment Application
