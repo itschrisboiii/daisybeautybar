@@ -1,4 +1,53 @@
-* {
+<template>
+  <main>
+    <div v-if="!submitted">
+    <div class="wrapper">
+        <form @submit.prevent="submitForm">
+            <h1>Appointment</h1>
+            <div class="input-box">
+                <input type="date" placeholder="Select Date" required>
+            </div>
+            <div class="input-box">
+                <input type="time" placeholder="Select Time" required>
+            </div>
+            <div class="input-box">
+                <label for="Services">Select a service:</label>
+                <select name="Services" id="Services" required>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Cateye">Cateye</option>
+                    <option value="Mega-Volume">Mega-Volume</option>
+            </select>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+    </div>
+    <div v-else>
+        <div class="submit">
+            <h1>Thanks for booking with me!</h1>
+            <h2>Check your email for your appointment details</h2>
+        </div>
+    </div>
+    </main>
+</template>
+
+<script>
+export default {
+    data() {
+        return {
+            submitted: false
+        };
+    },
+    methods: {
+        submitForm() {
+            this.submitted = true;
+        }
+    }
+}
+</script>
+
+<style scoped>
+ * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -84,12 +133,9 @@ main {
 .input-box label {
     color: white;
 }
-
-header {
+.submit {
+    color: white;
     text-align: center;
-    font-size: 50px;
-    color: white;
+    font-size: 30px;
 }
-a:visited {
-    color: white;
-}
+</style>

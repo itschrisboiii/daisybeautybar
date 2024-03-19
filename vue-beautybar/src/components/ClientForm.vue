@@ -1,11 +1,42 @@
-* {
+<template>
+<main>
+  <div class="wrapper">
+        <form @submit.prevent="submitForm">
+            <h1>Personsal Info</h1>
+            <div class="input-box">
+                <input type="text" placeholder="First Name" required>
+            </div>
+            <div class="input-box">
+                <input type="text" placeholder="Last Name" required>
+            </div>
+            <div class="input-box">
+                <input type="email" placeholder="Email" required>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+</main>
+</template>
+
+<script>
+export default {
+methods: {
+    submitForm() {
+        this.$router.push('/appointments')
+    }
+}
+}
+</script>
+
+<style scoped>
+    * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Barlow Semi Condensed";
     background-color: hotpink;
+    color: white;
 }
-
 main {
     display: flex;
     justify-content: center;
@@ -55,7 +86,6 @@ main {
     top: 50%;
     transform: translateY(-50%);
     font-size: 20px;
-    
 }
 
 
@@ -72,24 +102,4 @@ main {
     color: hotpink;
     font-weight: 600;
 }
-
-.input-box select {
-    color: white;
-    border: 2px solid white;
-    border-radius: 30px;
-    padding: 5px;
-    margin-top: 5px;
-}
-
-.input-box label {
-    color: white;
-}
-
-header {
-    text-align: center;
-    font-size: 50px;
-    color: white;
-}
-a:visited {
-    color: white;
-}
+</style>

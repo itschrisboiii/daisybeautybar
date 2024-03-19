@@ -6,23 +6,6 @@
     background-color: hotpink;
     color: white;
 }
-nav ul li a{
-    list-style: none;
-    text-decoration: none;
-    color: white;
-    font-weight: bold;
-}
-
-nav ul li {
-    display: inline-block;
-    padding-right: 25px;
-    font-size: 18px;
-}
-nav {
-    text-align: center;
-    padding-top: 20px;
-    margin-left: 25px;
-}
 main {
     display: flex;
     justify-content: center;

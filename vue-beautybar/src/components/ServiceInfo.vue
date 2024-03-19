@@ -1,26 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services</title>
-    <link rel="stylesheet" href="css/services.css">
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:ital,wght@0,400;0,700;1,400&family=Roboto+Condensed:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-    <header>
-        <div class="top">
-            <div class="logo">
-                <a href="index.html"><i class="fa fa-home"></i></a>
-            </div>
-            <a href="" class="button">Book Now</a>
-        </div>
-    </header>
-    <div class="card-container">
+<template>
+    <router-link v-bind:to="{name: 'client'}" class="button">Book Now</router-link>
+  <div class="card-container">
         <div class="card">
-            <img src="resources/images/IMG_1457.jpeg" alt="">
+            <img src="../assets/hybrid1.jpeg" alt="">
             <div class="container">
                 <h4><b>Hybrid</b></h4>
                 <p>$60</p>
@@ -28,7 +10,7 @@
             </div>
         </div>
             <div class="card">
-            <img src="resources/images/IMG_1457.jpeg" alt="">
+            <img src="../assets/classic1.jpeg" alt="">
             <div class="container">
                 <h4><b>Classic</b></h4>
                 <p>$60</p>
@@ -36,7 +18,7 @@
             </div>
         </div>
         <div class="card">
-            <img src="resources/images/IMG_1457.jpeg" alt="">
+            <img src="../assets/volume1.jpeg" alt="">
             <div class="container">
                 <h4><b>Volume</b></h4>
                 <p>$60</p>
@@ -44,7 +26,7 @@
             </div>
         </div>
     <div class="card">
-        <img src="resources/images/IMG_1457.jpeg" alt="">
+        <img src="../assets/hybrid2.jpeg" alt="">
         <div class="container">
             <h4><b>Hybrid Fill</b></h4>
             <p>$30</p>
@@ -52,7 +34,7 @@
         </div>
     </div>
     <div class="card">
-        <img src="resources/images/IMG_1457.jpeg" alt="">
+        <img src="../assets/classic1.jpeg" alt="">
         <div class="container">
             <h4><b>Classic Fill</b></h4>
             <p>$30</p>
@@ -60,7 +42,7 @@
         </div>
     </div>
     <div class="card">
-        <img src="resources/images/IMG_1457.jpeg" alt="">
+        <img src="../assets/volume2.jpeg" alt="">
         <div class="container">
             <h4><b>Volume Fill</b></h4>
             <p>$30</p>
@@ -68,7 +50,7 @@
         </div>
     </div>
     <div class="card">
-        <img src="resources/images/IMG_1457.jpeg" alt="">
+        <img src="../assets/classic1.jpeg" alt="">
         <div class="container">
             <h4><b>Removals</b></h4>
             <p>$20</p>
@@ -76,5 +58,93 @@
         </div>
     </div>
     </div>
-</body>
-</html>
+</template>
+
+<script>
+export default {
+
+}
+</script>
+
+<style scoped>
+.button {
+  background-color: white;
+    color: hotpink;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: "Roboto Condensed";
+    font-weight: bolder;
+    font-size: 20px;
+    margin-left: auto;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+ * {
+    background-color: hotpink;
+    font-family: "Barlow Semi Condensed";
+    color: white;
+    
+}
+
+.card img {
+    width:300px;
+    height: 300px;
+    object-fit: cover;
+    border-bottom: solid 4px white;
+}
+
+.card {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 300px;
+    text-align: center;
+    border: 5px solid white;
+    border-radius: 5px;
+    
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  .container {
+    padding: 2px 16px;
+    margin-bottom: 10px;
+  }
+
+  .container button {
+    margin-bottom: 10px;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 4px solid white;
+    border-radius: 40px;
+    padding: 20px 45px 20px 40px;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .card-container{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: space-evenly;
+    margin-top: 30px;
+  }
+  @media only screen and (max-width: 280px) {
+    .button {
+        right: 10px;
+        top: 20px;
+        font-size: 10px;
+    }
+  }
+</style>
