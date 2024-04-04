@@ -5,20 +5,21 @@
         <form @submit.prevent="submitForm">
             <h1>Appointment</h1>
             <div class="input-box">
-                <input type="date" placeholder="Select Date" required>
+                <input type="date" placeholder="Select Date" :min="minDate" :max="maxDate" v-model="selectedDate"  required>
             </div>
             <div class="input-box">
-                <input type="time" placeholder="Select Time" required>
+                <input type="time" placeholder="Select Time" v-model="selectedTime" @input="restrictTime" required>
             </div>
             <div class="input-box">
                 <label for="Services">Select a service:</label>
-                <select name="Services" id="Services" required>
-                    <option value="Hybrid">Hybrid</option>
-                    <option value="Cateye">Cateye</option>
-                    <option value="Mega-Volume">Mega-Volume</option>
+                <select name="Services" id="Services" required v-model="appointment.service_id">
+                    <option v-for="service in services" v-bind:key="service.id" :value="service.id">
+                    {{ service.serviceName }}
+                    </option>
+                    
             </select>
             </div>
-            <button type="submit" class="btn">Submit</button>
+            <button type="submit" class="btn"  v-on:click="makeAppointment()">Submit</button>
         </form>
     </div>
     </div>
@@ -32,16 +33,89 @@
 </template>
 
 <script>
+import BeautyBarServices from '@/services/BeautyBarServices';
+import BeautyBarAppointment from '@/services/BeautyBarAppointment';
 export default {
     data() {
         return {
-            submitted: false
+            submitted: false,
+            services: [],
+            minDate: this.getCurrentDate(),
+            maxDate: this.getMaxDate(),
+            selectedTime: '12:00',
+            selectedDate: '',
+            appointment: {
+                date: this.selectedDate,
+                time: "12:00:00",
+                client_id: this.$store.state.clientId,
+                service_id: null,
+            }
         };
     },
     methods: {
         submitForm() {
             this.submitted = true;
+        },
+        getServices() {
+            BeautyBarServices.getServices()
+            .then(response => {
+                this.services = response.data;
+            })
+            .catch(error => {
+                console.log(error + " in getServices")
+            })
+        },
+        getCurrentDate(){
+            const now = new Date();
+            const year = now.getFullYear();
+            let month = now.getMonth() + 1;
+            let day = now.getDate();
+
+            month = month < 10 ? '0' + month : month;
+            day = day < 10 ? '0' + day : day;
+
+            return `${year}-${month}-${day}`;
+        },
+        getMaxDate() {
+            const now = new Date();
+            now.setMonth(now.getMonth() + 1);
+            const year = now.getFullYear();
+            let month = now.getMonth() + 1;
+            let day = now.getDate();
+
+            month = month < 10 ? '0' + month : month;
+            day = day < 10 ? '0' + day : day;
+
+            return `${year}-${month}-${day}`;
+        },
+        restrictTime() {
+            if (this.selectedTime !== '12:00') {
+             this.selectedTime = '12:00';
         }
+    },
+    makeAppointment() {
+        this.appointment.date = this.formatDate(this.selectedDate);
+        BeautyBarAppointment.newAppointment(this.appointment)
+        .then(response => {
+            this.appointment = response.data;
+        })
+        .catch(error => {
+            console.log(error + " problem with makeAppointment")
+        });
+    },
+    formatDate(date) {
+      // Convert date string to Date object
+      const selectedDate = new Date(date);
+      // Get the year, month, and day
+      const year = selectedDate.getFullYear();
+      const month = ('0' + (selectedDate.getMonth() + 1)).slice(-2);
+      const day = ('0' + selectedDate.getDate()).slice(-2);
+      // Return formatted date string (YYYY-MM-DD)
+      return `${year}-${month}-${day}`;
+    }
+  },
+    created() {
+        this.getServices();
     }
 }
 </script>

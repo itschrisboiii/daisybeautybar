@@ -4,25 +4,49 @@
         <form @submit.prevent="submitForm">
             <h1>Personsal Info</h1>
             <div class="input-box">
-                <input type="text" placeholder="First Name" required>
+                <input type="text" placeholder="First Name" v-model="client.firstName" required>
             </div>
             <div class="input-box">
-                <input type="text" placeholder="Last Name" required>
+                <input type="text" placeholder="Last Name"  v-model="client.lastName" required>
             </div>
             <div class="input-box">
-                <input type="email" placeholder="Email" required>
+                <input type="email" placeholder="Email" v-model="client.email" required>
             </div>
-            <button type="submit" class="btn">Submit</button>
+            <button type="submit" class="btn" v-on:click="addClient()">Submit</button>
         </form>
     </div>
 </main>
 </template>
 
 <script>
+import BeautyBarClient from '@/services/BeautyBarClient';
 export default {
+    data() {
+        return {
+            client: {
+                firstName: '',
+                lastName: '',
+                email: ''
+            },
+            newClientId: 0
+        }
+    },
 methods: {
     submitForm() {
         this.$router.push('/appointments')
+    },
+    addClient() {
+        BeautyBarClient
+        .newClient(this.client)
+        .then(response => {
+            const newClientId = response.data.id;
+            this.$store.commit('setClientId', newClientId);
+            this.client = response.data;
+            console.log(this.client);
+        })
+        .catch(error => {
+            console.log(error + " probloem with addClient")
+        });
     }
 }
 }
